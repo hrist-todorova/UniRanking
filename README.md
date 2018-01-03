@@ -11,5 +11,5 @@ npm install
 ``` 
 
 ```
-browser-sync start -s WebApp
+browser-sync start -s WebApp --files "WebApp/**.*"
 ```

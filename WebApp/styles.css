@@ -1,0 +1,33 @@
+#app{
+  margin: 3em auto;
+  padding: 3em 0em;
+  width: 50%;
+  border: 1px solid rgba(80, 130, 4, 0.79);
+  padding: 1em;
+}
+
+.table-move {
+  transition: transform 1s;
+}
+
+.table-header{
+  font-weight: bold;
+  color: #E7E1E1;
+  background-color: #282828;
+}
+
+.table-body li {
+  border-bottom: 1px solid rgba(169, 169, 169, 0.36);
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
