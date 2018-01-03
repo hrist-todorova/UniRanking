@@ -15,5 +15,5 @@ function addCandidate() {
 
   candidates.push(candidate);
   candidates.sort((a, b) => b.score - a.score);
-  candidates.splice(14);
+  candidates.splice(15);
 }
