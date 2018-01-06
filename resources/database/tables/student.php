@@ -2,13 +2,13 @@
 
 function createTableStudents($connection) {
     $sql = "CREATE TABLE uni_ranking.students (
-	  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-	  firstname VARCHAR(256) NOT NULL,
-	  lastname VARCHAR(256) NOT NULL
+	  ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+	  Firstname VARCHAR(256) NOT NULL,
+	  Lastname VARCHAR(256) NOT NULL
     );";
 
     if ($connection->query($sql) === TRUE) {
-        echo "\nTable student created successfully";
+        echo "\nTable students created successfully";
     } else {
         echo "\nError creating table: " . $connection->error;
     }
