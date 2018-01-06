@@ -132,7 +132,7 @@
           form.append('grades', this.candidateGrades);
           form.append('wishes', candidateWishes);
 
-          let request = new Request('http://localhost:10000/api/addCandidate.php', {
+          let request = new Request('http://localhost:10000/uniRanking/api/addCandidate.php', {
             method: 'POST',
             body: JSON.stringify({
               name: this.candidateName,
