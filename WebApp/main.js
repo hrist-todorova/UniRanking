@@ -1,19 +1,12 @@
-candidates = [];
-counter = 1;
-function addCandidate() {
-  let candidate = {
-    id: counter,
-    name: 'Test Candidate ' + counter,
-    score: Math.round(((Math.random() * 100) % 36) * 100) / 100,
-    isNew: true
-  };
-  counter++;
+candidateGrades = [];
+candidateWishes = [];
 
-  let previous = candidates.find(e => e.isNew);
-  if (previous)
-    previous.isNew = false;
+function validateGrade({ value, subject }) {
+  let errors = [];
+  if (value < 2)
+    errors.push('Grade must be above 2');
+  if (value > 6)
+    errors.push('Grade must be below 6');
 
-  candidates.push(candidate);
-  candidates.sort((a, b) => b.score - a.score);
-  candidates.splice(15);
+  return { status: errors.length, errors: errors };
 }
