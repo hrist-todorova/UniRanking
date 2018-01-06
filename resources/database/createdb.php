@@ -6,7 +6,9 @@ $dirPath = './tables/';
 $fileList = array(
     'student.php',
     'speciality.php',
-    'grades.php'
+    'grades.php',
+    'wishes.php',
+    'coefficients.php'
 );
 
 foreach($fileList as $fileName)
@@ -22,5 +24,8 @@ if ($mysqli->connect_error) {
 
 createTableStudents($mysqli);
 createTableSpeciality($mysqli);
+createTableGrades($mysqli);
+createTableWishes($mysqli);
+createTableCoefficients($mysqli);
 
 $mysqli->close();
