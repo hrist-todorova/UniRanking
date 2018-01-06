@@ -1,0 +1,60 @@
+<div>
+  <div class="form-group">
+    <div>Име</div>
+    <input type="text" placeholder="Име" name="candidateName" v-model="candidateName" />
+  </div>
+
+  <div class="form-group">
+    <div>Оценка</div>
+    <input type="number" min="2" max="6" name="gradeValue" placeholder="Оценка" v-model.number="selectedGrade" />
+    <select v-model.number="selectedSubject">
+            <option value="0" disabled selected>Предмет</option>
+            <option v-for="(subject, id) in subjects" v-bind:value="id">
+              {{subject}}
+            </option>
+          </select>
+    <div v-on:click="addGrade" class="button">Добави</div>
+  </div>
+
+  <div class="form-group">
+    <div>Желание</div>
+    <input type="number" min="1" name="wishPriority" placeholder="Позиция" v-model.number="selectedPosition" class="fw-20" />
+    <select v-model.number="selectedSpeciality">
+            <option value="0" disabled selected>Специалност</option>
+            <option v-for="(speciality, id) in specialities" v-bind:value="id">
+              {{speciality}}
+            </option>
+          </select>
+    <div v-on:click="addWish" class="button">Добави</div>
+  </div>
+
+  <div class="form-group">
+    <div>
+      <span v-on:click="showGrades = !showGrades" class="collapse-header">Оценки</span>
+    </div>
+    <div v-if="showGrades" class="collapse-body">
+      <span v-if="candidateGrades.length == 0">Няма въведени оценки</span>
+      <div v-for="(grade, index) in candidateGrades">
+        <strong>Оценка: </strong>{{grade.grade}} <strong>Предмет</strong>{{grade.subjectId}}
+        <span v-on:click="remove(index, candidateGrades)" class="button">премахни</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div>
+      <span v-on:click="showWishes = !showWishes" class="collapse-header">Желания</span>
+    </div>
+    <div class="collapse-body" v-if="showWishes">
+      <span v-if="candidateWishes.length == 0">Няма въведени желания</span>
+      <div v-for="(wish, index) in candidateWishes" :key="wish.id">
+        <strong>Позиция: </strong>{{wish.priority}} <strong>Специалност</strong>{{wish.specialityId}}
+        <span v-on:click="remove(index, candidateWishes)" class="button">премахни</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <span v-on:click="sendCandidate" class="button">Изпращане</span>
+  </div>
+</div>

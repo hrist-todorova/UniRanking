@@ -5,146 +5,26 @@
   <meta charset="UTF-8">
   <title>Кандидат-студентска кампания</title>
 
-  <link href="styles.css" rel="stylesheet" />
-  <script src="./main.js"></script>
+  <link href="./css/styles.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+  <script src="./js/components/candidate-form.js"></script>
+  <script src="./js/components/speciality-ranking.js"></script>
+  <script src="./js/loader.js"></script>
 </head>
 
 <body>
   <div id="app">
-    <form>
-      <div class="form-group">
-        <div>Име</div>
-        <input type="text" placeholder="Име" name="candidateName" v-model="candidateName" />
-      </div>
-
-      <div class="form-group">
-        <div>Оценка</div>
-        <input type="number" min="2" max="6" name="gradeValue" placeholder="Оценка" v-model.number="selectedGrade" />
-        <select v-model.number="selectedSubject">
-            <option value="0" disabled selected>Предмет</option>
-            <option v-for="(subject, id) in subjects" v-bind:value="id">
-              {{subject}}
-            </option>
-          </select>
-        <div v-on:click="addGrade" class="button">Добави</div>
-      </div>
-
-      <div class="form-group">
-        <div>Желание</div>
-        <input type="number" min="1" name="wishPriority" placeholder="Позиция" v-model.number="selectedPosition" class="fw-20" />
-        <select v-model.number="selectedSpeciality">
-            <option value="0" disabled selected>Специалност</option>
-            <option v-for="(speciality, id) in specialities" v-bind:value="id">
-              {{speciality}}
-            </option>
-          </select>
-        <div v-on:click="addWish" class="button">Добави</div>
-      </div>
-
-      <div class="form-group">
-        <div>
-          <span v-on:click="showGrades = !showGrades" class="collapse-header">Оценки</span>
-        </div>
-        <div v-if="showGrades" class="collapse-body">
-          <span v-if="candidateGrades.length == 0">Няма въведени оценки</span>
-          <div v-for="(grade, index) in candidateGrades">
-            <strong>Оценка: </strong>{{grade.grade}} <strong>Предмет</strong>{{grade.subjectId}}
-            <span v-on:click="remove(index, candidateGrades)" class="button">премахни</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div>
-          <span v-on:click="showWishes = !showWishes" class="collapse-header">Желания</span>
-        </div>
-        <div class="collapse-body" v-if="showWishes">
-          <span v-if="candidateWishes.length == 0">Няма въведени желания</span>
-          <div v-for="(wish, index) in candidateWishes" :key="wish.id">
-            <strong>Позиция: </strong>{{wish.priority}} <strong>Специалност</strong>{{wish.specialityId}}
-            <span v-on:click="remove(index, candidateWishes)" class="button">премахни</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <span v-on:click="sendCandidate" class="button">Изпращане</span>
-      </div>
-    </form>
+    <component is="candidate-form"></component>
+    <component is="speciality-ranking"></component>
   </div>
 
   <script>
+    Vue.component('candidate-form', () => load('form/candidate'));
+    Vue.component('speciality-ranking', () => load('speciality-ranking'));
+
     new Vue({
-      el: '#app',
-      data: {
-        candidateName: null,
-        selectedSubject: 0,
-        selectedGrade: null,
-        selectedSpeciality: 0,
-        selectedPosition: null,
-        showGrades: false,
-        showWishes: false,
-        candidateGrades: candidateGrades,
-        candidateWishes: candidateWishes,
-        subjects: {
-          1: 'БЕЛ-диплома',
-          2: 'БЕЛ-изпит',
-          3: 'МАТ-диплома',
-          4: 'МАТ-изпит'
-        },
-        specialities: {
-          1: 'КН',
-          2: 'И',
-          3: 'СИ',
-          4: 'ПМ'
-        }
-      },
-      methods: {
-        remove: function (index, collection) {
-          collection.splice(index, 1);
-        },
-        addGrade: function () {
-          let grade = {
-            grade: this.selectedGrade,
-            subjectId: this.selectedSubject
-          };
-          let validation = validateGrade(grade);
-          if (validation.status == 0) {
-            this.candidateGrades.push(grade);
-            this.showGrades = true;
-          }
-          else { }
-        },
-        addWish: function () {
-          let wish = {
-            id: this.candidateWishes.length,
-            priority: this.selectedPosition,
-            specialityId: this.selectedSpeciality
-          };
-
-          this.candidateWishes.push(wish);
-          this.showWishes = true;
-        },
-        sendCandidate: function () {
-          let form = new FormData();
-          form.append('name', this.candidateName);
-          form.append('grades', this.candidateGrades);
-          form.append('wishes', candidateWishes);
-
-          let request = new Request('http://localhost:10000/uniRanking/api/addCandidate.php', {
-            method: 'POST',
-            body: JSON.stringify({
-              name: this.candidateName,
-              grades: this.candidateGrades,
-              wishes: this.candidateWishes
-            })
-          });
-
-          fetch(request)
-            .then(response => console.log(response));
-        }
-      }
+      el: '#app'
     });
   </script>
 </body>
