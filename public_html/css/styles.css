@@ -3,7 +3,8 @@
   padding: 3em 0em;
   width: 50%;
   border: 1px solid rgba(80, 130, 4, 0.79);
-  padding: 1em;
+	padding: 1em;
+	font-family: 'Roboto', sans-serif;
 }
 
 .text-success{
@@ -86,7 +87,7 @@ form{
 }
 
 input, select {
-  border: 1px solid rgba(128, 128, 128, 0.50);
+  border: 1px groove rgba(169, 169, 169, 0.36);
   border-radius: 3px;
   padding: .3em 1em;
 }
