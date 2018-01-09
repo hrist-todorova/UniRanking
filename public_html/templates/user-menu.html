@@ -1,0 +1,16 @@
+<div>
+  <div>
+    Username: <strong>{{user.name}}</strong>
+  </div>
+  <div>
+    <button v-on:click="$emit('route', 'candidate-form')" class="button">Добавяне на кандидат</button>
+  </div>
+  <div>
+    <button v-on:click="$emit('route', 'speciality-ranking')" class="button">Класиране</button>
+  </div>
+  <div>
+    <button v-on:click="$emit('logout')" class="button">Изход</button>
+  </div>
+
+
+</div>

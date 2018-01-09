@@ -2,30 +2,60 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Кандидат-студентска кампания</title>
+  <meta charset="UTF-8">
+  <title>Кандидат-студентска кампания</title>
 
-	<link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic-ext" rel="stylesheet">
-	<link href="./css/styles.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic-ext" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="./css/styles.css" rel="stylesheet" />
 
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-	<script src="./js/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="./js/loader.js"></script>
+  <script src="./js/config.js"></script>
 
-	<script src="./js/components/candidate-form.js"></script>
-	<script src="./js/components/speciality-ranking.js"></script>
+  <script src="./js/components/candidate-form.js"></script>
+  <script src="./js/components/speciality-ranking.js"></script>
+  <script src="./js/components/login.js"></script>
+  <script src="./js/components/user-menu.js"></script>
+
 </head>
 
 <body>
-	<div id="app">
-		<component is="candidate-form"></component>
-		<component is="speciality-ranking"></component>
-	</div>
+  <div id="app">
+    <component :is="currentRoute" v-on:login="loginHandler" v-on:logout="logoutHandler" v-on:route="routing"></component>
+    <component id="settings" is="user-menu" v-on:logout="logoutHandler" v-if="user.isLogged" v-bind:user="user" v-on:route="routing"></component>
+  </div>
 
-	<script>
-		new Vue({
-			el: '#app'
-		});
-	</script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        user: {
+          name: null,
+          isLogged: false,
+          isAdmin: false
+        },
+        currentRoute: 'login'
+      },
+      methods: {
+        loginHandler: function (user) {
+          this.user.name = user.name;
+          this.user.isLogged = true;
+          this.user.isAdmin = user.isAdmin;
+          this.currentRoute = 'speciality-ranking';
+        },
+        logoutHandler: function () {
+          this.user.name = null;
+          this.user.isLogged = false;
+          this.user.isAdmin = false;
+          this.currentRoute = 'login';
+        },
+        routing: function (route) {
+          this.currentRoute = route;
+        }
+      }
+    });
+  </script>
 </body>
 
 </html>

@@ -2,13 +2,27 @@
   margin: 3em auto;
   padding: 3em 0em;
   width: 50%;
-  border: 1px solid rgba(80, 130, 4, 0.79);
+  border: 1px solid #282828;
+  color: #282828;
 	padding: 1em;
 	font-family: 'Roboto', sans-serif;
 }
 
+.center {
+  width: 50%;
+  margin: 1em auto;
+}
+
+#settings {
+  position: fixed;
+  right: 3em;
+  top: 3em;
+  border: thin solid #282828;
+}
+
 .text-success{
-  color: rgba(80, 130, 4, 0.79);
+  color: rgb(99, 164, 0);
+  font-weight: 700;
 }
 
 .table-move {
@@ -79,7 +93,10 @@ ul {
   padding-left: 0 !important; 
 }
 
-
+.hover:hover {
+  opacity: .8;
+  cursor: pointer;
+}
 
 /* Form section */
 form{
@@ -89,7 +106,12 @@ form{
 input, select {
   border: 1px groove rgba(169, 169, 169, 0.36);
   border-radius: 3px;
+  color: #282828;
   padding: .3em 1em;
+}
+
+option {
+  color: #282828;
 }
 
 input[type="number"] {
@@ -102,9 +124,9 @@ select {
 
 .button {
   display: inline-block;
-  background-color: rgb(220, 220, 220);
-  border: 1px solid rgba(128, 128, 128, 0.50);
-  padding: .3em 1em;
+  background-color: #E7E1E1;
+  border: 1px solid #282828;
+  padding: .2em 1em;
   border-radius: 3px;
   cursor: pointer;
 }
