@@ -1,20 +1,16 @@
 const TEMPLATES = {
-  'form/candidate': './templates/forms/candidate-form.html',
-  'speciality-ranking': './templates/speciality-ranking.html'
+	'form/candidate': './templates/forms/candidate-form.html',
+	'speciality-ranking': './templates/speciality-ranking.html'
 };
 
-const COMPONENTS = {
-  'form/candidate': CandidateComponent,
-  'speciality-ranking': SpecialityRankingComponent
-};
-
-function load(component) {
-  return fetch(TEMPLATES[component])
-    .then(res => res.text())
-    .then(template => {
-      return new Promise((resolve, reject) => {
-        COMPONENTS[component].template = template;
-        resolve(COMPONENTS[component]);
-      });
-    });
+function load(componentTemplate, component) {
+	console.log('Loading "' + componentTemplate + '"');
+	return fetch(TEMPLATES[componentTemplate])
+		.then(res => res.text())
+		.then(template => {
+			return new Promise((resolve, reject) => {
+				component.template = template;
+				resolve(component);
+			});
+		});
 }

@@ -14,6 +14,31 @@
   transition: transform 1s;
 }
 
+.tab-container {
+	display: flex;
+	color:#282828;
+}
+
+.tab-container div {
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	padding: .5em 0;
+	text-align: center;
+	font-weight: 700;
+	flex: 1 1 auto;
+	cursor: default;
+}
+
+.tab-container div:not(.active):hover {
+	opacity: .8;
+	cursor: pointer;
+}
+
+.tab-container .active {
+	color: #E7E1E1;
+	background-color: #282828;
+}
+
 .table-header{
   font-weight: bold;
   color: #E7E1E1;

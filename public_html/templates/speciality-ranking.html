@@ -1,18 +1,26 @@
 <div>
-  <div v-on:click="addCandidate" class="button">Добави кандидат</div>
-  <div class="container table-header">
-    <div class="row">
-      <div class="col-2">#</div>
-      <div class="col-6">Name</div>
-      <div class="col-2">Score</div>
-    </div>
-  </div>
+	<div v-on:click="addCandidate" class="button">Добави кандидат</div>
+	<div class="tab-container">
+		<div>КН</div>
+		<div class="active">КН</div>
+		<div>КН</div>
+		<div>КН</div>
+	</div>
+	<div class="container table-header">
+		<div class="row">
+			<div class="col-2">#</div>
+			<div class="col-6">Name</div>
+			<div class="col-2">Score</div>
+		</div>
+	</div>
 
-  <transition-group tag="ul" name="table" class="container table-body">
-    <li v-for="(cd, index) in candidates" :key="cd.id" v-bind:class="{'text-success': cd.isNew}" class="row">
-      <div class="col-2"> {{ index +1 }}</div>
-      <div class="col-6">{{ cd.name }}</div>
-      <div class="col-2"><strong>{{cd.score}}</strong></div>
-    </li>
-  </transition-group>
+	<transition-group tag="ul" name="table" class="container table-body">
+		<li v-for="(cd, index) in candidates" :key="cd.id" v-bind:class="{'text-success': cd.isNew}" class="row">
+			<div class="col-2"> {{ index +1 }}</div>
+			<div class="col-6">{{ cd.name }}</div>
+			<div class="col-2">
+				<strong>{{cd.score}}</strong>
+			</div>
+		</li>
+	</transition-group>
 </div>
