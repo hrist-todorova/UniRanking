@@ -7,9 +7,9 @@
 ### WebApp launch
 
 ```
-npm install
+npm install -g browser-sync
 ``` 
 
 ```
-browser-sync start -s WebApp --files "WebApp/**.*"
+browser-sync start -s public_html --files public_html
 ```
