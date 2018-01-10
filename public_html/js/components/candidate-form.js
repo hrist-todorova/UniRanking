@@ -38,10 +38,26 @@ Vue.component('candidate-form', () => load('form/candidate', {
     remove: function (index, collection) {
       collection.splice(index, 1);
     },
+    // getSpecialities: function () {
+    //   let res = Object.keys(this.specialities)
+
+    //   let filtered = res.filter(id => this.candidateWishes.find(e => e.id == id) == undefined);
+    //   console.log(filtered);
+
+
+    //   let t = filtered.reduce((res, sp) => {
+    //     res[sp] = this.specialities[sp];
+    //     return res;
+    //   }, {});
+
+    //   console.log(t);
+    //   return t;
+    // },
     addGrade: function () {
       let grade = {
         grade: this.selectedGrade,
-        subjectId: this.selectedSubject
+        subjectId: this.selectedSubject,
+        subject: this.subjects[this.selectedSubject]
       };
       let validation = validateGrade(grade);
       if (validation.status == 0) {
@@ -54,10 +70,12 @@ Vue.component('candidate-form', () => load('form/candidate', {
       let wish = {
         id: this.candidateWishes.length,
         priority: this.selectedPosition,
-        specialityId: this.selectedSpeciality
+        specialityId: this.selectedSpeciality,
+        speciality: this.specialities[this.selectedSpeciality]
       };
 
       this.candidateWishes.push(wish);
+      this.candidateWishes.sort((a, b) => a.priority > b.priority);
       this.showWishes = true;
     },
     sendCandidate: function () {

@@ -8,16 +8,26 @@
 	font-family: 'Roboto', sans-serif;
 }
 
+#settings {
+  position: fixed;
+  left: 1em;
+  top: 3em;
+  padding: .3em;
+}
+
+.border {
+  border-radius: 5px;
+  border: thin groove #282828;
+  background-color: rgba(176, 196, 222, 0.10);
+}
+
+#settings .body{
+  margin: 1em;
+}
+
 .center {
   width: 50%;
   margin: 1em auto;
-}
-
-#settings {
-  position: fixed;
-  right: 3em;
-  top: 3em;
-  border: thin solid #282828;
 }
 
 .text-success{

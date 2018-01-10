@@ -1,16 +1,19 @@
-<div>
+<div id="settings" v-bind:class="{'border': collapsed}">
   <div>
-    Username: <strong>{{user.name}}</strong>
+    <span class="fa fa-bars hover" style="font-size: 1.5em;" v-on:click="collapsed = !collapsed"></span>
   </div>
-  <div>
-    <button v-on:click="$emit('route', 'candidate-form')" class="button">Добавяне на кандидат</button>
+  <div v-if="collapsed" class="body">
+    <div>
+      Username: <strong>{{user.name}}</strong>
+    </div>
+    <div>
+      <span v-on:click="$emit('route', 'candidate-form')" class="collapse-header">Добавяне на кандидат</span>
+    </div>
+    <div>
+      <span v-on:click="$emit('route', 'speciality-ranking')" class="collapse-header">Класиране</span>
+    </div>
+    <div>
+      <span v-on:click="$emit('logout')" class="collapse-header">Изход</span>
+    </div>
   </div>
-  <div>
-    <button v-on:click="$emit('route', 'speciality-ranking')" class="button">Класиране</button>
-  </div>
-  <div>
-    <button v-on:click="$emit('logout')" class="button">Изход</button>
-  </div>
-
-
 </div>
