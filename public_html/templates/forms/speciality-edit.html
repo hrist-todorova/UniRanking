@@ -1,0 +1,24 @@
+<div class="center">
+  <div class="form-group">
+    <div>Избор на специалност</div>
+    <select v-model.number="selectedSpeciality">
+    <option v-for="(speciality, id) in specialities" v-bind:value="id">
+      {{speciality}}
+    </option>
+  </select>
+  </div>
+  <div class="form-group">
+    <div>Платено обучение</div>
+    <input type="number" v-model.number="paidTuitionCount" />
+  </div>
+  <div class="form-group">
+    <div>Държавна поръчка</div>
+    <input type="number" v-model.number="normalTuitionCount" />
+  </div>
+  <div class="form-group">
+    <div class="collapse-header" v-on:click="collapseScore = !collapseScore">Балообразуване</div>
+    <div v-if="collapseScore">
+      няма балообразуване
+    </div>
+  </div>
+</div>
