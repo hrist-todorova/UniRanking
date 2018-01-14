@@ -1,4 +1,4 @@
-const server = 'http://localhost:8080/uniRanking/';
+const server = 'http://localhost:10000/';
 
 const rest = {
   candidate: {
