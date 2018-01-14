@@ -24,7 +24,7 @@
 <body>
   <div id="app">
     <component :is="currentRoute" v-on:login="loginHandler" v-on:logout="logoutHandler" v-on:route="routing"></component>
-    <component is="user-menu" v-on:logout="logoutHandler" v-if="true" v-bind:user="user" v-on:route="routing"></component>
+    <component is="user-menu" v-on:logout="logoutHandler" v-if="user.isLogged" v-bind:user="user" v-on:route="routing"></component>
   </div>
 
   <script>
@@ -36,7 +36,7 @@
           isLogged: false,
           isAdmin: false
         },
-        currentRoute: 'speciality-ranking'
+        currentRoute: 'login'
       },
       methods: {
         loginHandler: function (user) {

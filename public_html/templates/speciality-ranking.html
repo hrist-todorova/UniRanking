@@ -1,23 +1,28 @@
 <div>
-  <div class="tab-container">
-    <div v-for="sp in specialities" v-bind:class="{'active': sp.isActive }" v-on:click="activateTab(sp.id)">
-      {{sp.name}}
-    </div>
+  <div style="text-align: center" v-if="!loaded">
+    <span class="fa fa-spinner fa-pulse fa-2x"></span>
   </div>
-  <div class="container table-header">
-    <div class="row">
-      <div class="col-2">#</div>
-      <div class="col-6">Име</div>
-      <div class="col-2">Бал</div>
+  <div v-if="loaded">
+    <div class="tab-container">
+      <div v-for="sp in specialities" v-bind:class="{'active': sp.isActive }" v-on:click="activateTab(sp.id)">
+        {{sp.name}}
+      </div>
     </div>
-  </div>
+    <div class="container table-header">
+      <div class="row">
+        <div class="col-2">#</div>
+        <div class="col-6">Име</div>
+        <div class="col-2">Бал</div>
+      </div>
+    </div>
 
-  <transition-group tag="ul" name="table" class="container table-body">
-    <li v-for="(cd, index) in candidates" :key="cd.id" v-bind:class="{'text-success': cd.isNew}" class="row">
-      <div class="col-2"> {{ index +1 }}</div>
-      <div class="col-6">{{ cd.name }}</div>
-      <div class="col-2">{{cd.score}}</div>
-    </li>
-  </transition-group>
-  <div v-on:click="addCandidate" class="hover fa fa-plus"></div>
+    <transition-group tag="ul" name="table" class="container table-body">
+      <li v-for="(cd, index) in candidates" :key="cd.id" v-bind:class="{'text-success': cd.isNew}" class="row">
+        <div class="col-2"> {{ index +1 }}</div>
+        <div class="col-6">{{ cd.name }}</div>
+        <div class="col-2">{{cd.score}}</div>
+      </li>
+    </transition-group>
+    <div v-on:click="addCandidate" class="hover fa fa-plus"></div>
+  </div>
 </div>

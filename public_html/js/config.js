@@ -2,13 +2,13 @@ const server = 'http://localhost:8080/uniRanking/';
 
 const rest = {
   candidate: {
-    add: 'api/addCandidate.php'
+    add: 'api/candidate/addCandidate.php'
   },
-  grade: {
-    get: 'api/getAllGrades.php'
+  subject: {
+    get: 'api/subject/getAllSubjects.php'
   },
   speciality: {
-    get: 'api/getAllSpecialities.php',
-    update: 'api/updateSpeciality.php'
+    get: 'api/speciality/getAllSpecialities.php',
+    update: 'api/speciality/updateSpeciality.php'
   }
 }

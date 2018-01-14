@@ -1,6 +1,7 @@
 Vue.component('speciality-ranking', () => load('speciality-ranking', {
   data: function () {
     return {
+      loaded: false,
       candidates: new Array(),
       counter: 1,
       specialities: [
@@ -11,7 +12,19 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
       ]
     }
   },
+  mounted: function () {
+    setTimeout(() => this.loaded = true, 1500);
+    this.getData()
+      .then(res => this.loaded = true);
+
+  },
   methods: {
+    getData: function () {
+      // queries the backend for the specialities
+      // filters specialities by selected or somthing else
+      // queries backend for data about the current selected speciality
+      return Promise.resolve();
+    },
     addCandidate: function () {
       let candidate = {
         id: this.counter,
