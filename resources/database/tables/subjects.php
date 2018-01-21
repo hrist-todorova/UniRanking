@@ -11,4 +11,26 @@ function createTableSubjects($connection) {
     } else {
         echo "\nError creating table: " . $connection->error;
     }
+
+    # ДАННИТЕ СА ОТ КСК СУ 2016
+
+    $connection->begin_transaction();
+
+    $connection->query("SET NAMES utf8;");
+
+    $sql = "INSERT INTO uni_ranking.subjects(Name)
+    VALUES 
+        ('БЕЛ - диплома'),
+        ('БЕЛ - изпит'),
+        ('Математика - диплома'),
+        ('Математика - изпит')
+    ;";
+
+    if ($connection->query($sql) === TRUE) {
+        echo "\nTable subjects is now full.";
+        $connection->commit();
+    } else {
+        echo "\nError populating table subjects: " . $connection->error;
+        $connection->rollback();
+    }
 }
