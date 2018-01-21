@@ -6,7 +6,8 @@ function createTableGrades($connection) {
 	  SubjectID INT UNSIGNED NOT NULL,
 	  Grade FLOAT NOT NULL DEFAULT 2.00,
       PRIMARY KEY (StudentID, SubjectID),
-      FOREIGN KEY (StudentID) REFERENCES students(ID)
+      FOREIGN KEY (StudentID) REFERENCES students(ID),
+      FOREIGN KEY (SubjectID) REFERENCES subjects(ID)
     );";
 
     if ($connection->query($sql) === TRUE) {

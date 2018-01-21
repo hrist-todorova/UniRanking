@@ -7,7 +7,8 @@ function createTableCoefficients($connection) {
 	  SubjectID INT UNSIGNED NOT NULL,
       Coefficient FLOAT NOT NULL,
       PRIMARY KEY (SpecialityID, SubjectID),
-      FOREIGN KEY (SpecialityID) REFERENCES speciality(ID)
+      FOREIGN KEY (SpecialityID) REFERENCES speciality(ID),
+      FOREIGN KEY (SubjectID) REFERENCES subjects(ID)
     );";
 
     if ($connection->query($sql) === TRUE) {
