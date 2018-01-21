@@ -4,7 +4,7 @@
 function createTableSpeciality($connection) {
     $sql = "CREATE TABLE uni_ranking.speciality (
       ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-      Name VARCHAR(256) NOT NULL,
+      Name VARCHAR(255) NOT NULL UNIQUE,
       Ordered_tuition_men INT NOT NULL DEFAULT 0,
       Ordered_tuition_women INT NOT NULL DEFAULT 0,
       Paid_tuition_men INT NOT NULL DEFAULT 0,

@@ -3,7 +3,7 @@
 function createTableSubjects($connection) {
     $sql = "CREATE TABLE uni_ranking.subjects (
 	  ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-	  Name VARCHAR(256) NOT NULL
+	  Name VARCHAR(255) NOT NULL UNIQUE
     );";
 
     if ($connection->query($sql) === TRUE) {
