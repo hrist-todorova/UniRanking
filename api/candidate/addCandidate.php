@@ -10,12 +10,11 @@ if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
-
 $names = explode(" ", $data["name"]); //check if null
 $firstName = $names[0]; // check if > 256
 $lastName = $names[1]; // check if > 256
 $gradesArr =  $data["grades"];
-
+$wishesArr =  $data["wishes"];
 
 
 $mysqli->begin_transaction();
@@ -50,6 +49,26 @@ foreach ($gradesArr as $index => $values) {
     $subjectID = $values["subjectId"]; //check if null
 
     $stmt->bind_param("iii", $studentID, $subjectID, $grade);
+    if(!$stmt->execute()){
+        print_r("Error : $mysqli->error");
+        $mysqli->rollback();
+        return;
+    }
+}
+
+$stmt = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority) VALUES (?, ?, ?);');
+if(!$stmt) {
+    $error = $mysqli->errno . ' ' . $mysqli->error;
+    echo $error;
+    $mysqli->rollback();
+    return;
+}
+
+foreach ($wishesArr as $index => $values) {
+    $priority =  $values["priority"]; //check if null
+    $specialityId = $values["specialityId"]; //check if null
+
+    $stmt->bind_param("iii", $studentID, $specialityId, $priority);
     if(!$stmt->execute()){
         print_r("Error : $mysqli->error");
         $mysqli->rollback();
