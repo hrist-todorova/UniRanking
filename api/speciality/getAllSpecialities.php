@@ -14,7 +14,7 @@ $response = array();
 
 if ($specialities->num_rows > 0) {
     while($row = $specialities->fetch_assoc()) {
-        array_push($response, array("id" => intval($row['Id']), "name" => $row['Name'], "isActive" => false));
+        array_push($response, array("id" => intval($row['ID']), "name" => $row['Name'], "isActive" => false));
     }
 } 
 

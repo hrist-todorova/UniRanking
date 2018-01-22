@@ -8,13 +8,12 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
     }
   },
   mounted: function () {
-    setTimeout(() => this.loaded = true, 1500);
-    this.getData()
+    this.loadNomenclatures()
       .then(res => this.loaded = true);
 
   },
   methods: {
-    getData: function () {
+    loadNomenclatures: function () {
       return fetch('api/speciality/getAllSpecialities.php')
         .then(res => res.json())
         .then(specialities => {

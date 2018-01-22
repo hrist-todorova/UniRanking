@@ -12,52 +12,47 @@ Vue.component('candidate-form', () => load('form/candidate', {
   data: function () {
     return {
       candidateName: null,
-      selectedSubject: 0,
+      selectedSubject: null,
       selectedGrade: null,
-      selectedSpeciality: 0,
+      selectedSpeciality: null,
       selectedPosition: null,
       showGrades: false,
       showWishes: false,
       candidateGrades: new Array(),
       candidateWishes: new Array(),
-      subjects: {
-        1: 'БЕЛ-диплома',
-        2: 'БЕЛ-изпит',
-        3: 'МАТ-диплома',
-        4: 'МАТ-изпит'
-      },
-      specialities: {
-        1: 'КН',
-        2: 'И',
-        3: 'СИ',
-        4: 'ПМ'
-      }
+      subjects: new Array(),
+      specialities: new Array()
     }
   },
+  mounted: function () {
+    this.loadNomenclatures()
+      .then(res => [this.specialities, this.subjects] = res);
+
+  },
   methods: {
+    loadNomenclatures: function () {
+      return Promise.all([
+        fetch('api/speciality/getAllSpecialities.php').then(res => res.json()),
+        fetch('api/subject/getAllSubjects.php').then(res => res.json())
+      ]);
+    },
     remove: function (index, collection) {
       collection.splice(index, 1);
     },
-    // getSpecialities: function () {
-    //   let res = Object.keys(this.specialities)
-
-    //   let filtered = res.filter(id => this.candidateWishes.find(e => e.id == id) == undefined);
-    //   console.log(filtered);
-
-
-    //   let t = filtered.reduce((res, sp) => {
-    //     res[sp] = this.specialities[sp];
-    //     return res;
-    //   }, {});
-
-    //   console.log(t);
-    //   return t;
-    // },
+    resetForm: function () {
+      this.candidateGrades = new Array();
+      this.candidateWishes = new Array();
+      this.candidateName = null;
+      this.selectedGrade = null;
+      this.selectedPosition = null;
+      this.selectedSubject = null;
+      this.selectedSpeciality = null;
+    },
     addGrade: function () {
       let grade = {
         grade: this.selectedGrade,
-        subjectId: this.selectedSubject,
-        subject: this.subjects[this.selectedSubject]
+        subjectId: this.selectedSubject.id,
+        subject: this.selectedSubject.name
       };
       let validation = validateGrade(grade);
       if (validation.status == 0) {
@@ -70,8 +65,8 @@ Vue.component('candidate-form', () => load('form/candidate', {
       let wish = {
         id: this.candidateWishes.length,
         priority: this.selectedPosition,
-        specialityId: this.selectedSpeciality,
-        speciality: this.specialities[this.selectedSpeciality]
+        specialityId: this.selectedSpeciality.id,
+        speciality: this.selectedSpeciality.name
       };
 
       this.candidateWishes.push(wish);
@@ -79,7 +74,7 @@ Vue.component('candidate-form', () => load('form/candidate', {
       this.showWishes = true;
     },
     sendCandidate: function () {
-      let request = new Request(server + rest.candidate.add, {
+      let request = new Request(rest.candidate.add, {
         method: 'POST',
         body: JSON.stringify({
           name: this.candidateName,
@@ -89,7 +84,10 @@ Vue.component('candidate-form', () => load('form/candidate', {
       });
 
       fetch(request)
-        .then(response => console.log(response));
+        .then(response => {
+          if (response.status == 200)
+            this.resetForm();
+        });
     }
   }
 }));

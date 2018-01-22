@@ -9,8 +9,8 @@
     <input type="number" min="2" max="6" name="gradeValue" placeholder="Оценка" v-model.number="selectedGrade" />
     <select v-model.number="selectedSubject">
       <option value="0" disabled selected>Предмет</option>
-      <option v-for="(subject, id) in subjects" v-bind:value="id">
-        {{subject}}
+      <option v-for="subject in subjects" v-bind:value="subject">
+        {{subject.name}}
       </option>
     </select>
     <div v-on:click="addGrade" class="button">Добави</div>
@@ -21,8 +21,8 @@
     <input type="number" min="1" name="wishPriority" placeholder="Позиция" v-model.number="selectedPosition" class="fw-20" />
     <select v-model.number="selectedSpeciality">
       <option value="0" disabled selected>Специалност</option>
-      <option v-for="(speciality, id) in specialities" v-bind:value="id">
-        {{speciality}}
+      <option v-for="speciality in specialities" v-bind:value="speciality">
+        {{speciality.name}}
       </option>
     </select>
     <div v-on:click="addWish" class="button">Добави</div>
