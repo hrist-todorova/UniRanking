@@ -8,6 +8,9 @@
       <span>Парола</span>
       <input type="password" placeholder="Парола" v-model="password" />
     </div>
+    <div class="center" style="color: darkred;" v-if="unauthorized">
+      <span>Неправилно потребителско име/парола</span>
+    </div>
     <div class="center">
       <button class="button">Вход</button>
     </div>

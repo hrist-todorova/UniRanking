@@ -47,7 +47,7 @@
 .tab-container div {
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
-	padding: .5em 0;
+	padding: .5em;
 	text-align: center;
 	font-weight: 700;
 	flex: 1 1 auto;

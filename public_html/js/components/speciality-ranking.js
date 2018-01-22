@@ -4,12 +4,7 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
       loaded: false,
       candidates: new Array(),
       counter: 1,
-      specialities: [
-        { id: 1, name: 'КН', isActive: true },
-        { id: 2, name: 'И', isActive: false },
-        { id: 3, name: 'МАТ', isActive: false },
-        { id: 4, name: 'СИ', isActive: false },
-      ]
+      specialities: new Array()
     }
   },
   mounted: function () {
@@ -20,10 +15,12 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
   },
   methods: {
     getData: function () {
-      // queries the backend for the specialities
-      // filters specialities by selected or somthing else
-      // queries backend for data about the current selected speciality
-      return Promise.resolve();
+      return fetch('api/speciality/getAllSpecialities.php')
+        .then(res => res.json())
+        .then(specialities => {
+          this.specialities = specialities;
+          this.specialities[0].isActive = true;
+        });
     },
     addCandidate: function () {
       let candidate = {
