@@ -5,7 +5,7 @@ function executeRanking($mysqli, $isMale) {
   $sql = "SELECT * FROM uni_ranking.ranking rank JOIN uni_ranking.speciality spec ON rank.SpecialityID = spec.ID WHERE rank.IsAccepted IS NULL;";
   $result = $mysqli->query($sql);
   
-  if ($result->num_rows > 0) {
+  while ($result->num_rows > 0) {
       while($row = $result->fetch_assoc()) {
         $ranked_candidates = "";
         $limit = 0;
@@ -43,11 +43,10 @@ function executeRanking($mysqli, $isMale) {
             } else {
               $mysqli->query("UPDATE uni_ranking.ranking SET IsAccepted = FALSE WHERE StudentID = " . $row['StudentID']);
             }
-      
           }
         }
       }
-      //repeat
+      $result = $mysqli->query($sql);
   }
 
   return;

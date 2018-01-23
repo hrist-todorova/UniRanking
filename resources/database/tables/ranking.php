@@ -19,4 +19,61 @@ function createTableRanking($connection) {
     } else {
         echo "\nError creating table: " . $connection->error;
     }
+
+    $connection->query("CREATE OR REPLACE VIEW uni_ranking.1 
+    AS SELECT student.ID, student.FirstName, student.LastName, rank.Score 
+    FROM uni_ranking.ranking rank 
+    JOIN uni_ranking.students student 
+    ON student.ID = StudentID
+    WHERE SpecialityID = 1 AND IsAccepted = TRUE
+    ORDER BY rank.Score DESC;");
+
+    $connection->query("CREATE OR REPLACE VIEW uni_ranking.2 
+    AS SELECT student.ID, student.FirstName, student.LastName, rank.Score 
+    FROM uni_ranking.ranking rank 
+    JOIN uni_ranking.students student 
+    ON student.ID = StudentID
+    WHERE SpecialityID = 2 AND IsAccepted = TRUE
+    ORDER BY rank.Score DESC;");
+
+    $connection->query("CREATE OR REPLACE VIEW uni_ranking.3
+    AS SELECT student.ID, student.FirstName, student.LastName, rank.Score 
+    FROM uni_ranking.ranking rank 
+    JOIN uni_ranking.students student 
+    ON student.ID = StudentID
+    WHERE SpecialityID = 3 AND IsAccepted = TRUE
+    ORDER BY rank.Score DESC;");
+
+    $connection->query("CREATE OR REPLACE VIEW uni_ranking.4
+    AS SELECT student.ID, student.FirstName, student.LastName, rank.Score 
+    FROM uni_ranking.ranking rank 
+    JOIN uni_ranking.students student 
+    ON student.ID = StudentID
+    WHERE SpecialityID = 4 AND IsAccepted = TRUE
+    ORDER BY rank.Score DESC;");
+
+    $connection->query("CREATE OR REPLACE VIEW uni_ranking.5
+    AS SELECT student.ID, student.FirstName, student.LastName, rank.Score 
+    FROM uni_ranking.ranking rank 
+    JOIN uni_ranking.students student 
+    ON student.ID = StudentID
+    WHERE SpecialityID = 5 AND IsAccepted = TRUE
+    ORDER BY rank.Score DESC;");
+
+    $connection->query("CREATE OR REPLACE VIEW uni_ranking.6
+    AS SELECT student.ID, student.FirstName, student.LastName, rank.Score 
+    FROM uni_ranking.ranking rank 
+    JOIN uni_ranking.students student 
+    ON student.ID = StudentID
+    WHERE SpecialityID = 6 AND IsAccepted = TRUE
+    ORDER BY rank.Score DESC;");
+
+    $connection->query("CREATE OR REPLACE VIEW uni_ranking.7
+    AS SELECT student.ID, student.FirstName, student.LastName, rank.Score 
+    FROM uni_ranking.ranking rank 
+    JOIN uni_ranking.students student 
+    ON student.ID = StudentID
+    WHERE SpecialityID = 7 AND IsAccepted = TRUE
+    ORDER BY rank.Score DESC;");
+    
 }
