@@ -45,6 +45,7 @@ foreach ($gradesArr as $index => $values) {
     $grades[$subjectID] = $grade;
 }
 
+$stmt = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
 if(!$stmt) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
@@ -55,24 +56,33 @@ if(!$stmt) {
 foreach ($wishesArr as $index => $values) {
     $priority =  $values["priority"]; //check if null
     $specialityId = $values["specialityId"]; //check if null
+    $score = 0;
    
     switch($specialityId) {
         case 1:
+            $score = informaticsTypeScore($grades);
             break;
         case 2:
+            $score = informaticsTypeScore($grades);
             break;
         case 3:
+            $score = informaticsTypeScore($grades);
             break;
         case 4:
+            $score = informaticsTypeScore($grades);
             break;
         case 5:
+            $score = mathematicsTypeScore($grades);
             break;
         case 6:
+            $score = mathematicsTypeScore($grades);
             break;
         case 7:
+            $score = mathematicsTypeScore($grades);
             break;
     }
 
+    $stmt->bind_param("iiii", $studentID, $specialityId, $priority, $score);
     if(!$stmt->execute()){
         print_r("Error : $mysqli->error");
         $mysqli->rollback();

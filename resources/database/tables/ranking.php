@@ -5,6 +5,7 @@ function createTableRanking($connection) {
       ID INT UNSIGNED AUTO_INCREMENT UNIQUE,
       StudentID INT UNSIGNED NOT NULL,
       SpecialityID INT UNSIGNED NOT NULL,
+      Score FLOAT NULL,
       PRIMARY KEY (StudentID),
       FOREIGN KEY (StudentID) REFERENCES students(ID),
       FOREIGN KEY (SpecialityID) REFERENCES speciality(ID)
