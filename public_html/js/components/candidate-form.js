@@ -90,14 +90,16 @@ Vue.component('candidate-form', () => load('form/candidate', {
               resolve(null);
             //res.json().then(body => resolve(body));
             if (res.status == 422)
-              res.json().then(body => reject(body.error));
+              res.json().then(body => reject(body.errors));
           });
         })
         .then(body => {
           this.resetForm();
           this.$emit('message', 'Успешно въведохте кандидат', 'success');
         })
-        .catch(error => this.$emit('message', error, 'error'));
+        .catch(errors => {
+          errors.foreach(error => this.$emit('error', error, 'error'));
+        });
     }
   }
 }));
