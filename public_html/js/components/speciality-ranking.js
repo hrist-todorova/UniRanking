@@ -46,6 +46,7 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
     activateTab: function (index) {
       this.specialities.find(e => e.isActive).isActive = false;
       this.specialities.find(e => e.id == index).isActive = true;
+      this.load(this);
     },
     load: function (self) {
       let activeSpecialityId = self.specialities.find(e => e.isActive).id;
