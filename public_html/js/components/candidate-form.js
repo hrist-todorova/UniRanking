@@ -88,9 +88,8 @@ Vue.component('candidate-form', () => load('form/candidate', {
           return new Promise((resolve, reject) => {
             if (res.status == 200)
               resolve(null);
-            //res.json().then(body => resolve(body));
             if (res.status == 422)
-              res.json().then(body => reject(body.errors));
+              res.json().then(body => reject(body));
           });
         })
         .then(body => {
@@ -98,7 +97,8 @@ Vue.component('candidate-form', () => load('form/candidate', {
           this.$emit('message', 'Успешно въведохте кандидат', 'success');
         })
         .catch(errors => {
-          errors.foreach(error => this.$emit('error', error, 'error'));
+          console.log('caught errors:', errors);
+          errors.forEach(error => this.$emit('message', error, 'error'));
         });
     }
   }

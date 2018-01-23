@@ -35,6 +35,7 @@ if(isset($data["name"])) {
    
 } else {
     array_push($errors, "Липсват име и фамилия.");
+    http_response_code(422);
     echo json_encode($errors);
     return;
 }
