@@ -1,11 +1,11 @@
 <div>
   <form class="center" v-on:submit="login($event)">
     <div class="center">
-      <span>Потребителско име</span>
+      <div>Потребителско име</div>
       <input type="text" placeholder="Име" v-model="username" />
     </div>
     <div class="center">
-      <span>Парола</span>
+      <div>Парола</div>
       <input type="password" placeholder="Парола" v-model="password" />
     </div>
     <div class="center" style="color: darkred;" v-if="unauthorized">
