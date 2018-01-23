@@ -4,13 +4,14 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
       loaded: false,
       candidates: new Array(),
       counter: 1,
-      specialities: new Array()
+      specialities: new Array(),
+      pollingRepeater: null
     }
   },
   mounted: function () {
     this.loadNomenclatures()
-      .then(res => this.loaded = true);
-
+      .then(res => this.loaded = true)
+      .then(() => this.polling());
   },
   methods: {
     loadNomenclatures: function () {
@@ -41,6 +42,26 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
     activateTab: function (index) {
       this.specialities.find(e => e.isActive).isActive = false;
       this.specialities.find(e => e.id == index).isActive = true;
+    },
+    load: function () {
+      let activeSpecialityId = this.specialities.find(e => e.isActive).id;
+      fetch(rest.speciality.getRanking + activeSpecialityId)
+        .then(res => res.json())
+        .then(res => {
+          this.candidates = res;
+        });
+    },
+    polling: function () {
+      this.pollingRepeater = setInterval(function () {
+        fetch(rest.polling)
+          .then(res => res.json())
+          .then(res => {
+            console.log('Polling service returned:', res);
+            if (res.hasChanges) {
+              this.load();
+            }
+          });
+      }, 5000);
     }
   }
 }));
