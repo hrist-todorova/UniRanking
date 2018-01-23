@@ -13,6 +13,9 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
       .then(res => this.loaded = true)
       .then(() => this.polling());
   },
+  beforeDestroy: function () {
+    clearInterval(this.pollingRepeater);
+  },
   methods: {
     loadNomenclatures: function () {
       return fetch('api/speciality/getAllSpecialities.php')

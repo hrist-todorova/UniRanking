@@ -12,9 +12,9 @@ Vue.component('candidate-form', () => load('form/candidate', {
   data: function () {
     return {
       candidateName: null,
-      selectedSubject: null,
+      selectedSubject: 0,
       selectedGrade: null,
-      selectedSpeciality: null,
+      selectedSpeciality: 0,
       selectedPosition: null,
       showGrades: false,
       showWishes: false,
@@ -52,7 +52,8 @@ Vue.component('candidate-form', () => load('form/candidate', {
       let grade = {
         grade: this.selectedGrade,
         subjectId: this.selectedSubject.id,
-        subject: this.selectedSubject.name
+        subject: this.selectedSubject.name,
+        subjectAlias: this.selectedSubject.alias
       };
       let validation = validateGrade(grade);
       if (validation.status == 0) {
@@ -66,7 +67,8 @@ Vue.component('candidate-form', () => load('form/candidate', {
         id: this.candidateWishes.length,
         priority: this.selectedPosition,
         specialityId: this.selectedSpeciality.id,
-        speciality: this.selectedSpeciality.name
+        speciality: this.selectedSpeciality.name,
+        specialityAlias: this.selectedSpeciality.alias
       };
 
       this.candidateWishes.push(wish);
