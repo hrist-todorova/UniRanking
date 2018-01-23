@@ -11,7 +11,8 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
   mounted: function () {
     this.loadNomenclatures()
       .then(res => this.loaded = true)
-    //.then(() => this.polling());
+      .then(() => this.load(this))
+      .then(() => this.lamePolling());
   },
   beforeDestroy: function () {
     clearInterval(this.pollingRepeater);
@@ -46,12 +47,12 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
       this.specialities.find(e => e.isActive).isActive = false;
       this.specialities.find(e => e.id == index).isActive = true;
     },
-    load: function () {
-      let activeSpecialityId = this.specialities.find(e => e.isActive).id;
+    load: function (self) {
+      let activeSpecialityId = self.specialities.find(e => e.isActive).id;
       fetch(rest.speciality.getRanking + activeSpecialityId)
         .then(res => res.json())
         .then(res => {
-          this.candidates = res;
+          self.candidates = res;
         });
     },
     polling: function () {
@@ -63,9 +64,15 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
           .then(res => {
             console.log('Polling service returned:', res);
             if (res.hasChanges) {
-              self.load();
+              self.load(self);
             }
           });
+      }, 5000);
+    },
+    lamePolling: function () {
+      let self = this;
+      this.pollingRepeater = setInterval(function () {
+        self.load(self);
       }, 5000);
     }
   }
