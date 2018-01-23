@@ -11,13 +11,49 @@ if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
-$names = explode(" ", $data["name"]); //check if null
-$firstName = $names[0]; // check if > 256
-$lastName = $names[1]; // check if > 256
+$errors = array();
+
+$mysqli->set_charset("utf8");
+
+if(isset($data["name"])) {
+    $names = explode(" ", $data["name"]);
+
+    $firstName = $names[0];
+    if(!isset($names[1])) {
+        array_push($errors, "Липсва фамилия.");
+        http_response_code(422);
+        echo json_encode($errors);
+        return;
+    }
+    $lastName = $names[1];
+    if(strlen($names[0]) > 256 || strlen($names[1]) > 256) {
+        array_push($errors, "Името или фамилията са твърде дълги.");
+        http_response_code(422);
+        echo json_encode($errors);
+        return;
+    }
+   
+} else {
+    array_push($errors, "Липсват име и фамилия.");
+    echo json_encode($errors);
+    return;
+}
+
 $gradesArr =  $data["grades"];
 $wishesArr =  $data["wishes"];
 $isMale = $data["isMale"];
 
+$grades = array();
+
+foreach ($gradesArr as $index => $values) {
+    $grade =  $values["grade"]; //check if null
+    if($grade > 6 || $grade < 2) {
+        array_push($errors, "Има невалидна оценка.");
+    }
+    $subjectID = $values["subjectId"]; //check if null
+
+    $grades[$subjectID] = $grade;
+}
 
 $mysqli->begin_transaction();
 
@@ -34,17 +70,6 @@ if(!$stmt_wishes->execute()){
     print_r("Error : $mysqli->error");
     $mysqli->rollback();
     return;
-}
-
-$studentID = $mysqli->insert_id;
-
-$grades = array();
-
-foreach ($gradesArr as $index => $values) {
-    $grade =  $values["grade"]; //check if null
-    $subjectID = $values["subjectId"]; //check if null
-
-    $grades[$subjectID] = $grade;
 }
 
 $stmt_wishes = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
