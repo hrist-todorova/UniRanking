@@ -3,6 +3,7 @@
 $data = json_decode(file_get_contents('php://input'), true);
 
 require_once(realpath( "../../resources/config.php"));
+require_once(realpath("./executeRanking.php"));
 
 $mysqli = new mysqli($config["db"]["host"], $config["db"]["username"], $config["db"]["password"]);
 
@@ -15,20 +16,21 @@ $firstName = $names[0]; // check if > 256
 $lastName = $names[1]; // check if > 256
 $gradesArr =  $data["grades"];
 $wishesArr =  $data["wishes"];
+$isMale = $data["isMale"];
 
 
 $mysqli->begin_transaction();
 
-$stmt = $mysqli->prepare('INSERT INTO uni_ranking.students(FirstName, LastName) VALUES (?, ?);');
-if(!$stmt) {
+$stmt_wishes = $mysqli->prepare('INSERT INTO uni_ranking.students(FirstName, LastName, IsMale) VALUES (?, ?, ?);');
+if(!$stmt_wishes) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
     $mysqli->rollback();
     return;
 }
 
-$stmt->bind_param("ss", $firstName, $lastName);
-if(!$stmt->execute()){
+$stmt_wishes->bind_param("ssi", $firstName, $lastName, $isMale);
+if(!$stmt_wishes->execute()){
     print_r("Error : $mysqli->error");
     $mysqli->rollback();
     return;
@@ -45,8 +47,16 @@ foreach ($gradesArr as $index => $values) {
     $grades[$subjectID] = $grade;
 }
 
-$stmt = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
-if(!$stmt) {
+$stmt_wishes = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
+if(!$stmt_wishes) {
+    $error = $mysqli->errno . ' ' . $mysqli->error;
+    echo $error;
+    $mysqli->rollback();
+    return;
+}
+
+$stmt_ranking = $mysqli->prepare('INSERT INTO uni_ranking.ranking(ID, StudentID, SpecialityID, Score, IsMale) VALUES (?, ?, ?, ?, ?);');
+if(!$stmt_ranking) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
     $mysqli->rollback();
@@ -82,12 +92,24 @@ foreach ($wishesArr as $index => $values) {
             break;
     }
 
-    $stmt->bind_param("iiii", $studentID, $specialityId, $priority, $score);
-    if(!$stmt->execute()){
+    $stmt_wishes->bind_param("iiii", $studentID, $specialityId, $priority, $score);
+    if(!$stmt_wishes->execute()){
         print_r("Error : $mysqli->error");
         $mysqli->rollback();
         return;
     }
+
+    if($priority == 1) {
+        $first_wish_id = $mysqli->insert_id;
+        $stmt_ranking->bind_param("iiiii", $first_wish_id, $studentID, $specialityId, $score, $isMale);
+        if(!$stmt_ranking->execute()){
+            print_r("Error : $mysqli->error");
+            $mysqli->rollback();
+            return;
+        }
+    }
+
+    executeRanking($mysqli, $isMale);
 }
 
 $mysqli->commit();
