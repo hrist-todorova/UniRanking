@@ -12,5 +12,5 @@ const rest = {
     update: 'api/speciality/updateSpeciality.php',
     getRanking: 'api/speciality/getRanking.php?specialityId='
   },
-  polling: 'api/rankingStatus.php'
+  polling: 'api/rankingStatus.php?specialityId='
 }

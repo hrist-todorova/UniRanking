@@ -52,13 +52,15 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
         });
     },
     polling: function () {
+      let self = this;
       this.pollingRepeater = setInterval(function () {
-        fetch(rest.polling)
+        let activeSpecialityId = self.specialities.find(e => e.isActive).id;
+        fetch(rest.polling + activeSpecialityId)
           .then(res => res.json())
           .then(res => {
             console.log('Polling service returned:', res);
             if (res.hasChanges) {
-              this.load();
+              self.load();
             }
           });
       }, 5000);
