@@ -55,6 +55,7 @@ foreach ($gradesArr as $index => $values) {
     $grades[$subjectID] = $grade;
 }
 
+
 $mysqli->begin_transaction();
 
 $stmt_wishes = $mysqli->prepare('INSERT INTO uni_ranking.students(FirstName, LastName, IsMale) VALUES (?, ?, ?);');
@@ -71,6 +72,8 @@ if(!$stmt_wishes->execute()){
     $mysqli->rollback();
     return;
 }
+
+$studentID = $mysqli->insert_id;
 
 $stmt_wishes = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
 if(!$stmt_wishes) {
