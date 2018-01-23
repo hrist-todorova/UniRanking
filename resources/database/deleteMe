@@ -1,3 +1,2 @@
 CREATE DATABASE `uni_ranking` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
 grant all privileges on uni_ranking.* to admin@localhost identified by '!QAZ2wsx' with grant option;
