@@ -23,7 +23,12 @@
 
 <body>
   <div id="app">
-    <component :is="currentRoute" v-on:login="loginHandler" v-on:logout="logoutHandler" v-on:route="routing"></component>
+    <div v-for="message in messages" class="message" v-bind:class="{'message-error': message.type === 'error', 'message-success': message.type === 'success'}">
+      {{message.message}}
+      <span v-on:click="removeMessage(message)" class="fa fa-times hover" style="font-size: 1em;"></span>
+    </div>
+    <component :is="currentRoute" v-on:login="loginHandler" v-on:logout="logoutHandler" v-on:route="routing" v-on:message="messageHandler"
+      class="content"></component>
     <component is="user-menu" v-on:logout="logoutHandler" v-if="user.isLogged" v-bind:user="user" v-on:route="routing"></component>
   </div>
 
@@ -36,7 +41,9 @@
           isLogged: false,
           isAdmin: false
         },
-        currentRoute: 'login'
+        currentRoute: 'login',
+        messages: new Array(),
+        nextMessageId: 0
       },
       methods: {
         loginHandler: function (user) {
@@ -53,6 +60,24 @@
         },
         routing: function (route) {
           this.currentRoute = route;
+        },
+        removeMessage: function (message) {
+          this.messages.splice(this.messages.indexOf(message), 1);
+        },
+        messageHandler: function (message, type) {
+          let messageWrapper = {
+            id: ++this.nextMessageId,
+            message: message,
+            type: type
+          };
+          this.messages.push(messageWrapper);
+
+          let self = this;
+          setTimeout(function () {
+            let message = self.messages.find(e => e.id == messageWrapper.id);
+            if (message)
+              self.messages.splice(self.messages.indexOf(message), 1);
+          }, 10 * 1000);
         }
       }
     });

@@ -1,7 +1,14 @@
-<div class="center">
+<div>
   <div class="form-group">
     <div>Име и фамилия</div>
     <input type="text" placeholder="Име" name="candidateName" v-model="candidateName" />
+  </div>
+  <div class="form-group">
+    <div>Пол</div>
+    <select v-model="gender">
+      <option value="male" selected>Мъж</option>
+      <option value="female">Жена</option>
+    </select>
   </div>
 
   <div class="form-group">
@@ -13,7 +20,7 @@
         {{subject.name}}
       </option>
     </select>
-    <div v-on:click="addGrade" class="button">Добави</div>
+    <button v-on:click="addGrade" :disabled="selectedSubject === 0 || selectedGrade == null">Добави</button>
   </div>
 
   <div class="form-group">
@@ -25,7 +32,7 @@
         {{speciality.name}}
       </option>
     </select>
-    <div v-on:click="addWish" class="button">Добави</div>
+    <button v-on:click="addWish" :disabled="selectedSpeciality === 0 || selectedPosition == null">Добави</button>
   </div>
 
   <div class="form-group">
@@ -56,6 +63,6 @@
   </div>
 
   <div class="form-group">
-    <span v-on:click="sendCandidate" class="button">Изпращане</span>
+    <button v-on:click="sendCandidate">Изпращане</button>
   </div>
 </div>

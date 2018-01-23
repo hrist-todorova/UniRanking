@@ -1,11 +1,29 @@
 #app{
-  margin: 3em auto;
-  padding: 3em 0em;
-  width: 50%;
-  border: 1px solid #282828;
   color: #282828;
-	padding: 1em;
+  width: 50%;
+  margin: 3em auto;
 	font-family: 'Roboto', sans-serif;
+}
+
+.content {
+  padding: 3em 1em;
+  border: 1px solid #282828;
+}
+
+.message {
+  padding: 1em .3em;
+  font-size: 1.3em;
+  margin-bottom: .5em;
+  border: 1px solid #282828;
+  border-radius: 8px;
+}
+
+.message-error {
+  background-color: rgb(217,83,79);
+}
+
+.message-success {
+  background-color: rgb(92,184,92);
 }
 
 #settings {
@@ -139,6 +157,24 @@ select {
   padding: .2em 1em;
   border-radius: 3px;
   cursor: pointer;
+}
+
+button {
+  display: inline-block;
+  background-color: #E7E1E1;
+  border: 1px solid #282828;
+  padding: .2em 1em;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 2em;
+}
+
+button:not([disabled]):hover{
+  opacity: .8;
+}
+
+button[disabled]:hover{
+  cursor: not-allowed;
 }
 
 .button:hover {

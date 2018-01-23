@@ -11,7 +11,7 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
   mounted: function () {
     this.loadNomenclatures()
       .then(res => this.loaded = true)
-      .then(() => this.polling());
+    //.then(() => this.polling());
   },
   beforeDestroy: function () {
     clearInterval(this.pollingRepeater);

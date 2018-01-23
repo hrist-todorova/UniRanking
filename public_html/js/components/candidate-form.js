@@ -14,6 +14,7 @@ Vue.component('candidate-form', () => load('form/candidate', {
       candidateName: null,
       selectedSubject: 0,
       selectedGrade: null,
+      gender: "male",
       selectedSpeciality: 0,
       selectedPosition: null,
       showGrades: false,
@@ -55,12 +56,8 @@ Vue.component('candidate-form', () => load('form/candidate', {
         subject: this.selectedSubject.name,
         subjectAlias: this.selectedSubject.alias
       };
-      let validation = validateGrade(grade);
-      if (validation.status == 0) {
-        this.candidateGrades.push(grade);
-        this.showGrades = true;
-      }
-      else { }
+      this.candidateGrades.push(grade);
+      this.showGrades = true;
     },
     addWish: function () {
       let wish = {
@@ -81,15 +78,26 @@ Vue.component('candidate-form', () => load('form/candidate', {
         body: JSON.stringify({
           name: this.candidateName,
           grades: this.candidateGrades,
-          wishes: this.candidateWishes
+          wishes: this.candidateWishes,
+          isMale: this.gender === 'male'
         })
       });
 
       fetch(request)
-        .then(response => {
-          if (response.status == 200)
-            this.resetForm();
-        });
+        .then(res => {
+          return new Promise((resolve, reject) => {
+            if (res.status == 200)
+              resolve(null);
+            //res.json().then(body => resolve(body));
+            if (res.status == 422)
+              res.json().then(body => reject(body.error));
+          });
+        })
+        .then(body => {
+          this.resetForm();
+          this.$emit('message', 'Успешно въведохте кандидат', 'success');
+        })
+        .catch(error => this.$emit('message', error, 'error'));
     }
   }
 }));
