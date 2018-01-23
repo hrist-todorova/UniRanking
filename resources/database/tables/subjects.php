@@ -3,7 +3,8 @@
 function createTableSubjects($connection) {
     $sql = "CREATE TABLE uni_ranking.subjects (
 	  ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-	  Name VARCHAR(255) NOT NULL UNIQUE
+	  Name VARCHAR(255) NOT NULL UNIQUE,
+      Alias VARCHAR(10) NOT NULL UNIQUE
     );";
 
     if ($connection->query($sql) === TRUE) {
@@ -18,12 +19,14 @@ function createTableSubjects($connection) {
 
     $connection->query("SET NAMES utf8;");
 
-    $sql = "INSERT INTO uni_ranking.subjects(Name)
+    $sql = "INSERT INTO uni_ranking.subjects(Name, Alias)
     VALUES 
-        ('БЕЛ - диплома'),
-        ('БЕЛ - изпит'),
-        ('Математика - диплома'),
-        ('Математика - изпит')
+        ('БЕЛ - диплома', 'beldp'),
+        ('БЕЛ - изпит', 'belex'),
+        ('Математика - диплома', 'matdp'),
+        ('Математика I- изпит', 'mat1ex'),
+        ('Математика II- изпит', 'mat2ex'),
+        ('Математика - матура', 'matmt')
     ;";
 
     if ($connection->query($sql) === TRUE) {

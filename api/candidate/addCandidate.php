@@ -36,27 +36,15 @@ if(!$stmt->execute()){
 
 $studentID = $mysqli->insert_id;
 
-$stmt = $mysqli->prepare('INSERT INTO uni_ranking.grades(StudentID, SubjectID, Grade) VALUES (?, ?, ?);');
-if(!$stmt) {
-    $error = $mysqli->errno . ' ' . $mysqli->error;
-    echo $error;
-    $mysqli->rollback();
-    return;
-}
+$grades = array();
 
 foreach ($gradesArr as $index => $values) {
     $grade =  $values["grade"]; //check if null
     $subjectID = $values["subjectId"]; //check if null
 
-    $stmt->bind_param("iii", $studentID, $subjectID, $grade);
-    if(!$stmt->execute()){
-        print_r("Error : $mysqli->error");
-        $mysqli->rollback();
-        return;
-    }
+    $grades[$subjectID] = $grade;
 }
 
-$stmt = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority) VALUES (?, ?, ?);');
 if(!$stmt) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
@@ -67,8 +55,24 @@ if(!$stmt) {
 foreach ($wishesArr as $index => $values) {
     $priority =  $values["priority"]; //check if null
     $specialityId = $values["specialityId"]; //check if null
+   
+    switch($specialityId) {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+    }
 
-    $stmt->bind_param("iii", $studentID, $specialityId, $priority);
     if(!$stmt->execute()){
         print_r("Error : $mysqli->error");
         $mysqli->rollback();
@@ -77,3 +81,31 @@ foreach ($wishesArr as $index => $values) {
 }
 
 $mysqli->commit();
+
+function mathematicsTypeScore($grades) {
+
+    $matdp = (empty($grades[3])) ? 0 : $grades[3];
+    $mat1ex = (empty($grades[4])) ? 0 : $grades[4];
+    $mat2ex = (empty($grades[5])) ? 0 : $grades[5];
+    $matmt = (empty($grades[6])) ? 0 : $grades[6];
+    
+    if($matmt != 0) {
+        $matdp = $matmt;
+    }
+    
+    return $matdp + 3*max($mat1ex, $mat2ex, $matmt);
+}
+  
+function informaticsTypeScore($grades) {
+
+    $matdp = (empty($grades[3])) ? 0 : $grades[3];
+    $mat1ex = (empty($grades[4])) ? 0 : $grades[4];
+    $mat2ex = (empty($grades[5])) ? 0 : $grades[5];
+    $matmt = (empty($grades[6])) ? 0 : $grades[6];
+  
+    if($matmt != 0) {
+        $matdp = $matmt;
+    }
+    
+    return $matdp + max(3*$mat1ex, 2*$mat2ex, 2*$matmt);
+}
