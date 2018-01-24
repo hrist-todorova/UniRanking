@@ -41,17 +41,35 @@ if(isset($data["name"])) {
 }
 
 $gradesArr =  $data["grades"];
+if(sizeof($gradesArr) == 0) {
+    array_push($errors, "Няма въведени оценки.");
+}
 $wishesArr =  $data["wishes"];
+if(sizeof($wishesArr) == 0) {
+    array_push($errors, "Няма въведени желания.");
+}
 $isMale = $data["isMale"];
+if(!isset($data["isMale"])) {
+    array_push($errors, "Няма зададен пол.");
+}
+
+if(sizeof($errors) > 0) {
+    http_response_code(422);
+    echo json_encode($errors);
+    return;
+}
 
 $grades = array();
 
 foreach ($gradesArr as $index => $values) {
-    $grade =  $values["grade"]; //check if null
+    $grade =  $values["grade"]; 
     if($grade > 6 || $grade < 2) {
         array_push($errors, "Има невалидна оценка.");
+        http_response_code(422);
+        echo json_encode($errors);
+        return;
     }
-    $subjectID = $values["subjectId"]; //check if null
+    $subjectID = $values["subjectId"];
 
     $grades[$subjectID] = $grade;
 }
