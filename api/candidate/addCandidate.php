@@ -77,7 +77,7 @@ foreach ($gradesArr as $index => $values) {
 
 $mysqli->begin_transaction();
 
-$stmt_wishes = $mysqli->prepare('INSERT INTO uni_ranking.students(FirstName, LastName, IsMale) VALUES (?, ?, ?);');
+$stmt_wishes = $mysqli->prepare('INSERT INTO '. $config["db"]["name"] .'.students(FirstName, LastName, IsMale) VALUES (?, ?, ?);');
 if(!$stmt_wishes) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
@@ -94,7 +94,7 @@ if(!$stmt_wishes->execute()){
 
 $studentID = $mysqli->insert_id;
 
-$stmt_wishes = $mysqli->prepare('INSERT INTO uni_ranking.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
+$stmt_wishes = $mysqli->prepare('INSERT INTO '. $config["db"]["name"] .'.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
 if(!$stmt_wishes) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
@@ -102,7 +102,7 @@ if(!$stmt_wishes) {
     return;
 }
 
-$stmt_ranking = $mysqli->prepare('INSERT INTO uni_ranking.ranking(ID, StudentID, SpecialityID, Score, IsMale) VALUES (?, ?, ?, ?, ?);');
+$stmt_ranking = $mysqli->prepare('INSERT INTO '. $config["db"]["name"] .'.ranking(ID, StudentID, SpecialityID, Score, IsMale) VALUES (?, ?, ?, ?, ?);');
 if(!$stmt_ranking) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
@@ -156,7 +156,7 @@ foreach ($wishesArr as $index => $values) {
         }
     }
 
-    executeRanking($mysqli, $isMale);
+    executeRanking($mysqli, $isMale, $config["db"]["name"]);
 }
 
 $mysqli->commit();

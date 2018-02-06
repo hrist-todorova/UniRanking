@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 
 $conn->set_charset("utf8");
 
-$ranking = $conn->query("SELECT * FROM uni_ranking." . $specialityId);
+$ranking = $conn->query("SELECT * FROM ". $config["db"]["name"] ."." . $specialityId);
 $response = array();
 
 if ($ranking->num_rows > 0) {

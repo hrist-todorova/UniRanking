@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 
 $conn->set_charset("utf8");
 
-$specialities = $conn->query("SELECT * FROM uni_ranking.subjects");
+$specialities = $conn->query("SELECT * FROM ". $config["db"]["name"] .".subjects");
 $response = array();
 
 if ($specialities->num_rows > 0) {
