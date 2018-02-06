@@ -1,7 +1,7 @@
 <?php
 
-function createTableWishes($connection) {
-    $sql = "CREATE TABLE uni_ranking.wishes (
+function createTableWishes($connection, $database) {
+    $sql = "CREATE TABLE ". $database .".wishes (
       ID INT UNSIGNED AUTO_INCREMENT UNIQUE,
       StudentID INT UNSIGNED NOT NULL,
       SpecialityID INT UNSIGNED NOT NULL,

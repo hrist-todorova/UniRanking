@@ -22,10 +22,10 @@ if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
-createTableStudents($mysqli);
-createTableSpeciality($mysqli);
-createTableSubjects($mysqli);
-createTableWishes($mysqli);
-createTableRanking($mysqli);
+createTableStudents($mysqli, $config["db"]["name"]);
+createTableSpeciality($mysqli, $config["db"]["name"]);
+createTableSubjects($mysqli, $config["db"]["name"]);
+createTableWishes($mysqli, $config["db"]["name"]);
+createTableRanking($mysqli, $config["db"]["name"]);
 
 $mysqli->close();

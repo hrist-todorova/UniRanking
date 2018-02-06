@@ -1,7 +1,7 @@
 <?php
 
-function createTableSubjects($connection) {
-    $sql = "CREATE TABLE uni_ranking.subjects (
+function createTableSubjects($connection, $database) {
+    $sql = "CREATE TABLE ". $database .".subjects (
 	  ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 	  Name VARCHAR(255) NOT NULL UNIQUE,
       Alias VARCHAR(10) NOT NULL UNIQUE
@@ -19,7 +19,7 @@ function createTableSubjects($connection) {
 
     $connection->query("SET NAMES utf8;");
 
-    $sql = "INSERT INTO uni_ranking.subjects(Name, Alias)
+    $sql = "INSERT INTO ". $database .".subjects(Name, Alias)
     VALUES 
         ('БЕЛ - диплома', 'beldp'),
         ('БЕЛ - изпит', 'belex'),

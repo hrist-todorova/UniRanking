@@ -1,8 +1,8 @@
 <?php
 
 
-function createTableSpeciality($connection) {
-    $sql = "CREATE TABLE uni_ranking.speciality (
+function createTableSpeciality($connection, $database) {
+    $sql = "CREATE TABLE ". $database .".speciality (
       ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
       Name VARCHAR(255) NOT NULL UNIQUE,
       Ordered_tuition_men INT NOT NULL DEFAULT 0,
@@ -23,7 +23,7 @@ function createTableSpeciality($connection) {
 
     $connection->query("SET NAMES utf8;");
 
-    $sql = "INSERT INTO uni_ranking.speciality(Name, Ordered_tuition_men, Ordered_tuition_women, Paid_tuition_men, Paid_tuition_women)
+    $sql = "INSERT INTO ". $database .".speciality(Name, Ordered_tuition_men, Ordered_tuition_women, Paid_tuition_men, Paid_tuition_women)
     VALUES 
         ('Информатика', 75, 50, 1, 1),
         ('Компютърни науки', 115, 60, 0, 0),
