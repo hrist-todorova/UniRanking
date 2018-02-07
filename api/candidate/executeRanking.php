@@ -2,13 +2,17 @@
 
 function executeRanking($mysqli, $isMale, $database) {
 
-  $sql = "SELECT * FROM ". $database .".ranking rank JOIN ". $database .".speciality spec ON rank.SpecialityID = spec.ID WHERE rank.IsAccepted IS NULL;";
-  $result = $mysqli->query($sql);
-  
+  $result = getAllStudentsToBeRanked($mysqli, $database);
+
+  // iterate until all students are accepted or rejected
   while ($result->num_rows > 0) {
+
+      // for each student -> accept/reject him/her at best possible wish
       while($row = $result->fetch_assoc()) {
+
         $ranked_candidates = "";
         $limit = 0;
+
         if($isMale) {
           $ranked_candidates = "SELECT ID, StudentID, Score FROM ". $database .".ranking WHERE IsAccepted = TRUE AND IsMale = TRUE and SpecialityID = " . $row['SpecialityID'] . " ORDER BY Score ASC";
           $limit = $row['Ordered_tuition_men'];
@@ -46,8 +50,21 @@ function executeRanking($mysqli, $isMale, $database) {
           }
         }
       }
-      $result = $mysqli->query($sql);
+
+      $result = getAllStudentsToBeRanked($mysqli, $database);
   }
 
   return;
+}
+
+
+function getAllStudentsToBeRanked($mysqli, $database) {
+
+    $sql = "SELECT * FROM ". $database .".ranking rank JOIN ". $database .".speciality spec ON rank.SpecialityID = spec.ID WHERE rank.IsAccepted IS NULL;";
+
+    return $mysqli->query($sql);
+}
+
+function getAllAcceptedStudentForSpeciality() {
+
 }
