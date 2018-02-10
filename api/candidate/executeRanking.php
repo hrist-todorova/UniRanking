@@ -37,7 +37,7 @@ function executeRanking($mysqli, $isMale, $database) {
             if ($new_rank_state->num_rows > 0) {
               $mysqli->query("UPDATE ". $database .".ranking SET Score = ".$new_rank_state['Score'] ." , SpecialityID = ".$new_rank_state['SpecialityID'] ." , IsAccepted = NULL, ID = ".$new_rank_state['ID']." WHERE StudentID = " . $last_candidate['StudentID']);
             } else {
-              $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = FALSE WHERE StudentID = " . $last_candidate['StudentID']);
+              $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = NULL WHERE StudentID = " . $last_candidate['StudentID']);
             }
           }
           else {
@@ -63,8 +63,4 @@ function getAllStudentsToBeRanked($mysqli, $database) {
     $sql = "SELECT * FROM ". $database .".ranking rank JOIN ". $database .".speciality spec ON rank.SpecialityID = spec.ID WHERE rank.IsAccepted IS NULL;";
 
     return $mysqli->query($sql);
-}
-
-function getAllAcceptedStudentForSpeciality() {
-
 }
