@@ -9,7 +9,6 @@ function executeRanking($mysqli, $isMale, $database) {
 
       // for each student -> accept/reject him/her at best possible wish
       while($row = $result->fetch_assoc()) {
-
         $ranked_candidates = "";
         $limit = 0;
 
@@ -31,21 +30,11 @@ function executeRanking($mysqli, $isMale, $database) {
         } else {
           $last_candidate = $candidates->fetch_assoc();
           if($row['Score'] >=  $last_candidate['Score']){
-
-            if ($row['Score'] ==  $last_candidate['Score']) {
-                $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = TRUE WHERE StudentID = " . $row['StudentID']);
-            } else {
-                $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = TRUE WHERE StudentID = " . $row['StudentID']);
-
-                $new_rank_state = $mysqli->query("SELECT * FROM ". $database .".wishes WHERE Priority = (SELECT Priority FROM ". $database .".wishes WHERE ID = " . $last_candidate['ID']. " ) + 1 AND StudentID = ". $last_candidate['StudentID']);
-                if ($new_rank_state->num_rows > 0) {
-                    $mysqli->query("UPDATE ". $database .".ranking SET Score = ".$new_rank_state['Score'] ." , SpecialityID = ".$new_rank_state['SpecialityID'] ." , IsAccepted = NULL, ID = ".$new_rank_state['ID']." WHERE StudentID = " . $last_candidate['StudentID']);
-                } else {
-                    $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = NULL WHERE StudentID = " . $last_candidate['StudentID']);
-                }
+            $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = TRUE WHERE StudentID = " . $row['StudentID']);
+            if ($row['Score'] >  $last_candidate['Score']) {
+              $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = NULL WHERE SpecialityID = ". $row['SpecialityID'] . " AND Score = ". $last_candidate['Score']);
             }
-          }
-          else {
+          } else {
             $new_rank_state = $mysqli->query("SELECT * FROM ". $database .".wishes WHERE Priority = (SELECT Priority FROM ". $database .".wishes WHERE ID = " . $row['ID']. " ) + 1 AND StudentID = ". $row['StudentID']);
             if ($new_rank_state->num_rows > 0) {
               $mysqli->query("UPDATE ". $database .".ranking SET Score = ".$new_rank_state['Score'] ." , SpecialityID = ".$new_rank_state['SpecialityID'] ." , IsAccepted = NULL, ID = ".$new_rank_state['ID']." WHERE StudentID = " . $row['StudentID']);
@@ -55,7 +44,6 @@ function executeRanking($mysqli, $isMale, $database) {
           }
         }
       }
-
       $result = getAllStudentsToBeRanked($mysqli, $database);
   }
 
