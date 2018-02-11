@@ -32,7 +32,11 @@ function executeRanking($mysqli, $isMale, $database) {
           if($row['Score'] >=  $last_candidate['Score']){
             $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = TRUE WHERE StudentID = " . $row['StudentID']);
             if ($row['Score'] >  $last_candidate['Score']) {
-              $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = NULL WHERE SpecialityID = ". $row['SpecialityID'] . " AND Score = ". $last_candidate['Score']);
+              if($isMale) {
+                $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = NULL WHERE IsMale = TRUE AND SpecialityID = ". $row['SpecialityID'] . " AND Score = ". $last_candidate['Score']); 
+              } else {
+                $mysqli->query("UPDATE ". $database .".ranking SET IsAccepted = NULL WHERE IsMale = FALSE AND SpecialityID = ". $row['SpecialityID'] . " AND Score = ". $last_candidate['Score']);                 
+              }
             }
           } else {
             $new_rank_state = $mysqli->query("SELECT * FROM ". $database .".wishes WHERE Priority = (SELECT Priority FROM ". $database .".wishes WHERE ID = " . $row['ID']. " ) + 1 AND StudentID = ". $row['StudentID']);
