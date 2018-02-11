@@ -148,7 +148,7 @@ foreach ($wishesArr as $index => $values) {
         return;
     }
 
-    if($priority == 1) {
+    if($priority == 1 && $isPaidTuition != TRUE) {
         $first_wish_id = $mysqli->insert_id;
         $stmt_ranking->bind_param("iiiii", $first_wish_id, $studentID, $specialityId, $score, $isMale);
         if(!$stmt_ranking->execute()){
