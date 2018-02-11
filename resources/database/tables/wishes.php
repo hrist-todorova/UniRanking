@@ -7,6 +7,7 @@ function createTableWishes($connection, $database) {
       SpecialityID INT UNSIGNED NOT NULL,
       Score FLOAT NULL,
       Priority INT UNSIGNED NOT NULL,
+      isPaidTuition BOOL DEFAULT FALSE,
       PRIMARY KEY (StudentID, SpecialityID, Priority),
       FOREIGN KEY (StudentID) REFERENCES students(ID),
       FOREIGN KEY (SpecialityID) REFERENCES speciality(ID)

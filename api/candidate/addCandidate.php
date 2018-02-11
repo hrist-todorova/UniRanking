@@ -94,7 +94,7 @@ if(!$stmt_wishes->execute()){
 
 $studentID = $mysqli->insert_id;
 
-$stmt_wishes = $mysqli->prepare('INSERT INTO '. $config["db"]["name"] .'.wishes(StudentID, SpecialityID, Priority, Score) VALUES (?, ?, ?, ?);');
+$stmt_wishes = $mysqli->prepare('INSERT INTO '. $config["db"]["name"] .'.wishes(StudentID, SpecialityID, Priority, Score, isPaidTuition) VALUES (?, ?, ?, ?, ?);');
 if(!$stmt_wishes) {
     $error = $mysqli->errno . ' ' . $mysqli->error;
     echo $error;
@@ -111,8 +111,10 @@ if(!$stmt_ranking) {
 }
 
 foreach ($wishesArr as $index => $values) {
-    $priority =  $values["priority"]; //check if null
-    $specialityId = $values["specialityId"]; //check if null
+    $priority =  $values["priority"];
+    $specialityId = $values["specialityId"];
+    $isPaidTuition = $values["isPaidTuition"];
+
     $score = 0;
    
     switch($specialityId) {
@@ -139,7 +141,7 @@ foreach ($wishesArr as $index => $values) {
             break;
     }
 
-    $stmt_wishes->bind_param("iiii", $studentID, $specialityId, $priority, $score);
+    $stmt_wishes->bind_param("iiiii", $studentID, $specialityId, $priority, $score, $isPaidTuition);
     if(!$stmt_wishes->execute()){
         print_r("Error : $mysqli->error");
         $mysqli->rollback();
