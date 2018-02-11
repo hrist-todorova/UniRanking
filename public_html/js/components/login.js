@@ -9,16 +9,17 @@ Vue.component('login', () => load('login', {
   methods: {
     login: function (ev) {
       ev.preventDefault();
-      fetch('api/users/login.php')
-        .then(res => {
-          return new Promise((resolve, reject) => {
-            if (res.status == 401)
-              reject(401);
-            if (res.status == 200)
-              resolve(res);
-          })
+      fetch('api/users/login.php', {
+        method: 'POST',
+        body: JSON.stringify({ username: this.username, password: this.password })
+      }).then(res => {
+        return new Promise((resolve, reject) => {
+          if (res.status == 401)
+            reject(401);
+          if (res.status == 200)
+            resolve(res);
         })
-        .then(res => res.json())
+      }).then(res => res.json())
         .then(authData => this.$emit('login', { name: authData.name, isAdmin: authData.isAdmin }))
         .catch(errorCode => {
           if (errorCode == 401) {

@@ -28,3 +28,7 @@ grant all privileges on uni_ranking.* to admin@localhost identified by '!QAZ2wsx
 ```
 
 след това трябва да се изпълни `resources/database/createdb.php` 
+
+#### Credentials
+Username: admin
+Password: 12345
