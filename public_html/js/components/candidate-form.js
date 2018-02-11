@@ -17,6 +17,7 @@ Vue.component('candidate-form', () => load('form/candidate', {
       gender: "male",
       selectedSpeciality: 0,
       selectedPosition: null,
+      isPaidTuition: false,
       showGrades: false,
       showWishes: false,
       candidateGrades: new Array(),
@@ -45,6 +46,7 @@ Vue.component('candidate-form', () => load('form/candidate', {
       this.candidateWishes = new Array();
       this.candidateName = null;
       this.selectedGrade = null;
+      this.isPaidTuition = false;
       this.selectedPosition = null;
       this.selectedSubject = null;
       this.selectedSpeciality = null;
@@ -65,9 +67,11 @@ Vue.component('candidate-form', () => load('form/candidate', {
         priority: this.selectedPosition,
         specialityId: this.selectedSpeciality.id,
         speciality: this.selectedSpeciality.name,
-        specialityAlias: this.selectedSpeciality.alias
+        specialityAlias: this.selectedSpeciality.alias,
+        isPaidTuition: this.isPaidTuition
       };
 
+      this.isPaidTuition = false;
       this.candidateWishes.push(wish);
       this.candidateWishes.sort((a, b) => a.priority > b.priority);
       this.showWishes = true;

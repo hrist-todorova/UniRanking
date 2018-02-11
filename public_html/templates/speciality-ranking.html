@@ -17,7 +17,8 @@
     </div>
 
     <transition-group tag="ul" name="table" class="container table-body">
-      <li v-for="(cd, index) in candidates" :key="cd.id" v-bind:class="{'text-success': cd.isNew}" class="row">
+      <li v-for="(cd, index) in candidates" :key="cd.id" v-bind:class="{'text-success': cd.isNew, 'text-blue': cd.isPaidTuition}"
+        class="row">
         <div class="col-2"> {{ index +1 }}</div>
         <div class="col-6">{{ cd.name }}</div>
         <div class="col-2">{{cd.score}}</div>

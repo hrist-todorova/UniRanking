@@ -20,7 +20,9 @@
         {{subject.name}}
       </option>
     </select>
-    <button v-on:click="addGrade" :disabled="selectedSubject === 0 || selectedGrade == null">Добави</button>
+    <div>
+      <button v-on:click="addGrade" :disabled="selectedSubject === 0 || selectedGrade == null">Добави</button>
+    </div>
   </div>
 
   <div class="form-group">
@@ -32,7 +34,10 @@
         {{speciality.name}}
       </option>
     </select>
-    <button v-on:click="addWish" :disabled="selectedSpeciality === 0 || selectedPosition == null">Добави</button>
+    <input type="checkbox" v-model.boolean="isPaidTuition" /><span>Платено обучение</span>
+    <div>
+      <button v-on:click="addWish" :disabled="selectedSpeciality === 0 || selectedPosition == null">Добави</button>
+    </div>
   </div>
 
   <div class="form-group">
@@ -56,7 +61,7 @@
       <span v-if="candidateWishes.length == 0">Няма въведени желания</span>
       <div v-for="(wish, index) in candidateWishes" :key="wish.id">
         <!-- <strong>Позиция: </strong>{{wish.priority}} <strong>Специалност</strong>{{wish.specialityId}} -->
-        {{wish.speciality}} ({{wish.priority}})
+        {{wish.speciality}} ({{wish.priority}}) <span v-if="wish.isPaidTuition">платено обучение</span>
         <span v-on:click="remove(index, candidateWishes)" class="fa fa-times hover"></span>
       </div>
     </div>

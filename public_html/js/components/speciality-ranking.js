@@ -54,6 +54,7 @@ Vue.component('speciality-ranking', () => load('speciality-ranking', {
         .then(res => res.json())
         .then(res => {
           self.candidates = res;
+          // self.candidates.forEach(cd => cd.isPaidTuition = true);
         });
     },
     polling: function () {
